@@ -6,7 +6,7 @@ const Landing = () => {
         <div className="px-4">
           <div className="px-4 h-16 flex items-center">
             <a href="/" className="font-mono text-2xl font-bold text-white">
-              MCDB TT
+              TeleCMDB
             </a>
           </div>
         </div>
