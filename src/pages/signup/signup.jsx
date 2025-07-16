@@ -21,7 +21,6 @@ const signup = () => {
         <img
           src="assets/images/signupBackground.svg"
           className="absolute top-0 left-0"
-          alt="Signup Background"
         />
 
         {/* Fields */}
