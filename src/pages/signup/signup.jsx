@@ -25,7 +25,7 @@ const signup = () => {
         />
 
         {/* Fields */}
-        <div className="w-112 backdrop-blur-lg rounded-4xl shadow-lg p-5 bg-[#f94f1a]/60 text-white relative z-10 mx-auto mt-10 border border-black">
+        <div className="w-full max-w-md rounded-4xl shadow-lg p-5 bg-[#f94f1a]/60 text-white relative z-10 mx-auto mt-10 border border-black">
           <h2
             className="text-2xl font-bold pb-5 text-center"
             style={{
@@ -51,7 +51,7 @@ const signup = () => {
               <input
                 type="text"
                 id="name"
-                className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
+                className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="Nada Bargougui"
                 required
               />
@@ -71,7 +71,7 @@ const signup = () => {
               <input
                 type="email"
                 id="email"
-                className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
+                className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="exemple@mail.com"
                 required
               />
@@ -91,7 +91,7 @@ const signup = () => {
               <input
                 type="password"
                 id="password"
-                className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4"
+                className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="*********"
                 required
               />
@@ -99,7 +99,7 @@ const signup = () => {
             <div className="flex items-center justify-between mb-4">
               <button
                 type="submit"
-                className="text-black border border-black bg-[#ffc310] hover:bg-[#ffc310]/80 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 px-5 w-full sm:w-auto cursor-pointer"
+                className="w-[160px] text-black border border-black bg-[#ffc310] hover:bg-[#ffc310]/80 font-medium rounded-lg text-sm py-2.5 px-5 cursor-pointer"
               >
                 Confirmer
               </button>
