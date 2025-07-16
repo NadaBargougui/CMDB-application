@@ -6,12 +6,12 @@ const Landing = () => {
       {/* Navigation Bar */}
       <nav className="fixed top-0 w-full z-40 bg-[#546fca]/80 rounded-b-2xl shadow-md ">
         <div className="flex flex-wrap items-center justify-between px-4 sm:px-8 py-3 sm:py-4">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:top-4xl xl:top-5xl"
           >
             TeleCMDB
-          </a>
+          </Link>
         </div>
       </nav>
 
@@ -37,7 +37,7 @@ const Landing = () => {
           <Link to="/login">
             <button
               type="button"
-              className="w-40 sm:w-48 md:w-52 lg:w-60 text-base sm:text-lg md:text-xl lg:text-2xl px-4 sm:px-6 md:px-8 lg:px-10 py-2 sm:py-3 md:py-4 lg:py-5 text-white font-medium rounded-2xl bg-[#546fca]/80 hover:bg-[#546fca] transition-colors duration-300"
+              className="w-40 sm:w-48 md:w-52 lg:w-60 text-base sm:text-lg md:text-xl lg:text-2xl px-4 sm:px-6 md:px-8 lg:px-10 py-2 sm:py-3 md:py-4 lg:py-5 text-white font-medium rounded-2xl bg-[#546fca]/80 hover:bg-[#546fca] transition-colors duration-300 cursor-pointer"
             >
               Se connecter
             </button>
@@ -45,7 +45,7 @@ const Landing = () => {
           <Link to="/signup">
             <button
               type="button"
-              className="w-40 sm:w-48 md:w-52 lg:w-60 text-base sm:text-lg md:text-xl lg:text-2xl px-4 sm:px-6 md:px-8 lg:px-10 py-2 sm:py-3 md:py-4 lg:py-5 text-white font-medium rounded-2xl text-center bg-[#f94f1a]/80 hover:bg-[#f94f1a] transition-colors duration-300"
+              className="w-40 sm:w-48 md:w-52 lg:w-60 text-base sm:text-lg md:text-xl lg:text-2xl px-4 sm:px-6 md:px-8 lg:px-10 py-2 sm:py-3 md:py-4 lg:py-5 text-white font-medium rounded-2xl text-center bg-[#f94f1a]/80 hover:bg-[#f94f1a] transition-colors duration-300 cursor-pointer"
             >
               S'inscrire
             </button>
