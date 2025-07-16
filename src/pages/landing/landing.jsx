@@ -29,7 +29,7 @@ const Landing = () => {
         </div>
         {/* Background Image */}
         <img
-          src="assets/images/landingBackgroung4.svg"
+          src="assets/images/landingBackgroung.svg"
           className="absolute top-0 left-0"
         />
         {/* Welcome & Buttons */}
