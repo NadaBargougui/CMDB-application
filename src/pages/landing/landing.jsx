@@ -4,8 +4,8 @@ const Landing = () => {
   return (
     <>
       {/* Navigation Bar */}
-      <nav className="fixed top-0 w-full z-40 bg-[#546fca]/80 rounded-b-2xl shadow-md ">
-        <div className="flex flex-wrap items-center justify-between px-4 sm:px-8 py-3 sm:py-4">
+      <nav className="fixed top-0 w-full z-10 bg-[#546fca]/80 rounded-b-2xl shadow-md ">
+        <div className="px-4 sm:px-8 py-3 sm:py-4">
           <Link
             to="/"
             className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:top-4xl xl:top-5xl"
@@ -16,9 +16,9 @@ const Landing = () => {
       </nav>
 
       {/* Landing Section */}
-      <div className="relative min-h-screen w-full pt-24 overflow-hidden">
+      <div className="min-h-screen w-full overflow-hidden">
         {/* Text between navbar and buttons */}
-        <div className="absolute top-[20%] sm:top-[25%] md:top-[30%] lg:top-[35%] xl:top-[35%] left-[10%] z-10">
+        <div className="absolute top-[20%] sm:top-[25%] md:top-[30%] lg:top-[35%] xl:top-[35%] left-[10%] z-20">
           <h1 className="text-black text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold drop-shadow-md">
             Bienvenue à la Base de Données <br />
             de Gestion de Configuration de <br />

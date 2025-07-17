@@ -4,8 +4,8 @@ const signup = () => {
   return (
     <>
       {/* Navigation Bar */}
-      <nav className="fixed top-0 w-full z-40 bg-[#546fca]/80 rounded-b-2xl shadow-md ">
-        <div className="flex flex-wrap items-center justify-between px-4 sm:px-8 py-3 sm:py-4">
+      <nav className="fixed top-0 w-full z-10 bg-[#546fca]/80 rounded-b-2xl shadow-md ">
+        <div className="px-4 sm:px-8 py-3 sm:py-4">
           <Link
             to="/"
             className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:top-4xl xl:top-5xl"
@@ -16,7 +16,7 @@ const signup = () => {
       </nav>
 
       {/* Sign up Section */}
-      <div className="relative min-h-screen w-full pt-24 overflow-hidden">
+      <div className="min-h-screen w-full pt-32 overflow-hidden">
         {/* Background Image */}
         <img
           src="assets/images/signupBackground.svg"
@@ -32,7 +32,6 @@ const signup = () => {
                 "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black",
             }}
           >
-            {" "}
             S'inscrire
           </h2>
           <form>
