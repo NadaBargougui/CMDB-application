@@ -16,7 +16,7 @@ const signup = () => {
       </nav>
 
       {/* Sign up Section */}
-      <div className="min-h-screen w-full pt-32 overflow-hidden">
+      <div className="relative min-h-screen w-full pt-32 overflow-hidden">
         {/* Background Image */}
         <img
           src="assets/images/signupBackground.svg"
