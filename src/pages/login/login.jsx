@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUsername, setEmail, setPassword } from "../features/user/userSlice";
+import { setEmail, setPassword } from "../../store/slices/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login info:", { email, password });
-    // You can send this to your API here
+    // we can send this to your API here
   };
 
   return (

@@ -1,17 +1,44 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setUsername, setEmail, setPassword } from "../features/user/userSlice";
+import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from "react-redux";
+import {
+  setUsername,
+  setEmail,
+  setPassword,
+} from "../../store/slices/userSlice";
 
 const Signup = () => {
+  //------------------onSubmit-----------------------------------------------------------
   const dispatch = useDispatch();
-  const { username, email, password } = useSelector((state) => state.user);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Signup info:", { username, email, password });
+  const onSubmit = (data) => {
+    dispatch(setUsername(data.name));
+    dispatch(setEmail(data.email));
+    dispatch(setPassword(data.password));
+    console.log("Form submitted:", data);
     // we can now use this data for an API call
   };
 
+  //--------------------Yup Schema---------------------------------------------------------
+  const schema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().min(8, "Must be at least 8 characters").required(),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match") // Removed the null value
+      .required("Confirm your password"),
+  });
+
+  //--------------------useForm with yupResolver----------------------------------------------
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  //-----------------------------------------------------------------------------
   return (
     <>
       {/* Navigation Bar */}
@@ -45,7 +72,7 @@ const Signup = () => {
           >
             S'inscrire
           </h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -62,10 +89,12 @@ const Signup = () => {
                 id="name"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="Nada Bargougui"
-                value={username} //////////////////////////////////
-                onChange={(e) => dispatch(setUsername(e.target.value))} //////////////////////////////////
-                required
+                {...register("name")}
               />
+
+              {errors.name && (
+                <p className="text-red-400 text-sm">{errors.name.message}</p>
+              )}
             </div>
 
             <div className="mb-4">
@@ -84,10 +113,11 @@ const Signup = () => {
                 id="email"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="exemple@mail.com"
-                value={email}
-                onChange={(e) => dispatch(setEmail(e.target.value))}
-                required
+                {...register("email")}
               />
+              {errors.email && (
+                <p className="text-red-400 text-sm">{errors.email.message}</p>
+              )}
             </div>
 
             <div className="mb-4">
@@ -106,11 +136,40 @@ const Signup = () => {
                 id="password"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="*********"
-                value={password}
-                onChange={(e) => dispatch(setPassword(e.target.value))}
-                required
+                {...register("password")}
               />
+              {errors.password && (
+                <p className="text-red-400 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium"
+                style={{
+                  textShadow:
+                    "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black",
+                }}
+              >
+                Confirmer Mot de passe
+              </label>
+              <input
+                type="password"
+                id="password"
+                className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
+                placeholder="*********"
+                {...register("confirmPassword")}
+              />
+              {errors.confirmPassword && (
+                <p className="text-red-400 text-sm">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
+            </div>
+
             <div className="flex items-center justify-between mb-4">
               <button
                 type="submit"
