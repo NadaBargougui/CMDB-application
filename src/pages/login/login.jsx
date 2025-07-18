@@ -8,7 +8,7 @@ const login = () => {
         <div className="px-4 sm:px-8 py-3 sm:py-4">
           <Link
             to="/"
-            className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:top-4xl xl:top-5xl"
+            className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl"
           >
             TeleCMDB
           </Link>
@@ -24,9 +24,9 @@ const login = () => {
         />
 
         {/* Fields */}
-        <div className="w-full max-w-md rounded-4xl shadow-lg p-5 bg-[#f94f1a]/60 text-white relative z-10 mx-auto mt-10 border border-black">
+        <div className="w-full max-w-md rounded-4xl shadow-xl p-5 bg-[#546fca]/60 text-white relative z-10 mx-auto mt-10 border border-black">
           <h2
-            className="text-2xl font-bold pb-5 text-center"
+            className="text-2xl font-bold pb-7 text-center"
             style={{
               textShadow:
                 "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black",
@@ -77,7 +77,7 @@ const login = () => {
             <div className="flex items-center justify-between mb-4">
               <button
                 type="submit"
-                className="w-[160px] text-black border border-black bg-[#ffc310] hover:bg-[#ffc310]/80 font-medium rounded-lg text-sm py-2.5 px-5 cursor-pointer"
+                className="w-[120px] sm:w-[120px] md:w-[130px] lg:w-[140px] text-black border border-black bg-[#ffc310] hover:bg-[#ffc310]/80 font-medium rounded-lg text-sm py-2.5 px-5 sm:py-3 sm:px-6 cursor-pointer"
               >
                 Confirmer
               </button>

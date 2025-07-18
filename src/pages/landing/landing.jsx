@@ -8,7 +8,7 @@ const Landing = () => {
         <div className="px-4 sm:px-8 py-3 sm:py-4">
           <Link
             to="/"
-            className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:top-4xl xl:top-5xl"
+            className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl"
           >
             TeleCMDB
           </Link>
@@ -16,7 +16,7 @@ const Landing = () => {
       </nav>
 
       {/* Landing Section */}
-      <div className="min-h-screen w-full overflow-hidden">
+      <div className="relative min-h-screen w-full overflow-hidden">
         {/* Text between navbar and buttons */}
         <div className="absolute top-[20%] sm:top-[25%] md:top-[30%] lg:top-[35%] xl:top-[35%] left-[10%] z-20">
           <h1 className="text-black text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold drop-shadow-md">

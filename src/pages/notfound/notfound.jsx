@@ -7,7 +7,7 @@ const notfound = () => {
       <div className="relative min-h-screen w-full overflow-hidden">
         <img
           src="assets/images/notfoundBackground.svg"
-          className="absolute top-0 left-0"
+          className="min-h-screen w-full absolute top-0 left-0"
         />
         {/* Message */}
         <div className="relative z-20 text-black mt-64 px-132 py-20">
