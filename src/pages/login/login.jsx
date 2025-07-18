@@ -1,17 +1,37 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setEmail, setPassword } from "../../store/slices/userSlice";
+import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const Login = () => {
+  //---------------------onSubmit to dispatch data to redux-----------------------------------------------------------
   const dispatch = useDispatch();
-  const { email, password } = useSelector((state) => state.user);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login info:", { email, password });
-    // we can send this to your API here
+  const onSubmit = (data) => {
+    dispatch(setEmail(data.email));
+    dispatch(setPassword(data.password));
+    console.log("Login info:", data);
+    // Send to API here
   };
 
+  //--------------------Yup Schema---------------------------------------------------------
+  const schema = Yup.object().shape({
+    email: Yup.string()
+      .email("Adresse email invalide")
+      .required("L'adresse email est requise"),
+    password: Yup.string().required("Le mot de passe est requis"),
+  });
+
+  //---------------useForm with yupResolver----------------------------------------------
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  //-------------------------------------------------------------------------------------
   return (
     <>
       {/* Navigation Bar */}
@@ -19,7 +39,7 @@ const Login = () => {
         <div className="px-4 sm:px-8 py-3 sm:py-4">
           <Link
             to="/"
-            className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl"
+            className="font-bold text-white text-xl sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl"
           >
             TeleCMDB
           </Link>
@@ -45,7 +65,7 @@ const Login = () => {
           >
             Se connecter
           </h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
               <label
                 htmlFor="email"
@@ -55,17 +75,18 @@ const Login = () => {
                     "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black",
                 }}
               >
-                Adresse mail
+                Adresse email
               </label>
               <input
                 type="email"
                 id="email"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="exemple@mail.com"
-                value={email}
-                onChange={(e) => dispatch(setEmail(e.target.value))}
-                required
+                {...register("email")}
               />
+              {errors.email && (
+                <p className="text-red-600 text-sm">{errors.email.message}</p>
+              )}
             </div>
 
             <div className="mb-4">
@@ -84,10 +105,13 @@ const Login = () => {
                 id="password"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="*********"
-                value={password}
-                onChange={(e) => dispatch(setPassword(e.target.value))}
-                required
+                {...register("password")}
               />
+              {errors.password && (
+                <p className="text-red-600 text-sm">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
             <div className="flex items-center justify-between mb-4">
               <button
@@ -104,7 +128,7 @@ const Login = () => {
                   </Link>
                 </p>
                 <Link to="/signup" className="cursor-pointer ml-1">
-                  <p>Mot de passe oublier ?</p>
+                  <p>Mot de passe oublié ?</p>
                 </Link>
               </div>
             </div>

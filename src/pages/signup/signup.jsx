@@ -10,7 +10,7 @@ import {
 } from "../../store/slices/userSlice";
 
 const Signup = () => {
-  //------------------onSubmit-----------------------------------------------------------
+  //---------------------onSubmit to dispatch data to redux-----------------------------------------------------------
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
@@ -23,22 +23,26 @@ const Signup = () => {
 
   //--------------------Yup Schema---------------------------------------------------------
   const schema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().min(8, "Must be at least 8 characters").required(),
+    name: Yup.string().required("Le nom est requis"),
+    email: Yup.string()
+      .email("Adresse email invalide")
+      .required("L'adresse email est requise"),
+    password: Yup.string()
+      .min(8, "Le mot de passe doit contenir au moins 8 caractères")
+      .required("Le mot de passe est requis"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password")], "Passwords must match") // Removed the null value
-      .required("Confirm your password"),
+      .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas")
+      .required("Veuillez confirmer votre mot de passe"),
   });
 
-  //--------------------useForm with yupResolver----------------------------------------------
+  //---------------useForm with yupResolver----------------------------------------------
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  //-----------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------
   return (
     <>
       {/* Navigation Bar */}
@@ -54,7 +58,7 @@ const Signup = () => {
       </nav>
 
       {/* Sign up Section */}
-      <div className="relative min-h-screen w-full pt-44 overflow-hidden">
+      <div className="relative min-h-screen w-full pt-36 overflow-hidden">
         {/* Background Image */}
         <img
           src="assets/images/signupBackground.svg"
@@ -91,9 +95,8 @@ const Signup = () => {
                 placeholder="Nada Bargougui"
                 {...register("name")}
               />
-
               {errors.name && (
-                <p className="text-red-400 text-sm">{errors.name.message}</p>
+                <p className="text-red-600 text-sm">{errors.name.message}</p>
               )}
             </div>
 
@@ -106,7 +109,7 @@ const Signup = () => {
                     "-1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black",
                 }}
               >
-                Adresse mail
+                Adresse email
               </label>
               <input
                 type="email"
@@ -116,7 +119,7 @@ const Signup = () => {
                 {...register("email")}
               />
               {errors.email && (
-                <p className="text-red-400 text-sm">{errors.email.message}</p>
+                <p className="text-red-600 text-sm">{errors.email.message}</p>
               )}
             </div>
 
@@ -139,7 +142,7 @@ const Signup = () => {
                 {...register("password")}
               />
               {errors.password && (
-                <p className="text-red-400 text-sm">
+                <p className="text-red-600 text-sm">
                   {errors.password.message}
                 </p>
               )}
@@ -164,7 +167,7 @@ const Signup = () => {
                 {...register("confirmPassword")}
               />
               {errors.confirmPassword && (
-                <p className="text-red-400 text-sm">
+                <p className="text-red-600 text-sm">
                   {errors.confirmPassword.message}
                 </p>
               )}
