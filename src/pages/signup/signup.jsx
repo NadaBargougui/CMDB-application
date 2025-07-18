@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsername, setEmail, setPassword } from "../features/user/userSlice";
 
-const signup = () => {
+const Signup = () => {
+  const dispatch = useDispatch();
+  const { username, email, password } = useSelector((state) => state.user);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Signup info:", { username, email, password });
+    // we can now use this data for an API call
+  };
+
   return (
     <>
       {/* Navigation Bar */}
@@ -8,7 +19,7 @@ const signup = () => {
         <div className="px-4 sm:px-8 py-3 sm:py-4">
           <Link
             to="/"
-            className="font-bold text-white t-xl sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl"
+            className="font-bold text-white text-xl sm:text-xl md:text-2xl lg:text-4xl xl:text-5xl"
           >
             TeleCMDB
           </Link>
@@ -34,7 +45,7 @@ const signup = () => {
           >
             S'inscrire
           </h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -51,6 +62,8 @@ const signup = () => {
                 id="name"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="Nada Bargougui"
+                value={username} //////////////////////////////////
+                onChange={(e) => dispatch(setUsername(e.target.value))} //////////////////////////////////
                 required
               />
             </div>
@@ -71,6 +84,8 @@ const signup = () => {
                 id="email"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="exemple@mail.com"
+                value={email}
+                onChange={(e) => dispatch(setEmail(e.target.value))}
                 required
               />
             </div>
@@ -91,6 +106,8 @@ const signup = () => {
                 id="password"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="*********"
+                value={password}
+                onChange={(e) => dispatch(setPassword(e.target.value))}
                 required
               />
             </div>
@@ -115,4 +132,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Signup;

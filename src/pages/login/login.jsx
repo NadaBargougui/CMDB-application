@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsername, setEmail, setPassword } from "../features/user/userSlice";
 
-const login = () => {
+const Login = () => {
+  const dispatch = useDispatch();
+  const { email, password } = useSelector((state) => state.user);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Login info:", { email, password });
+    // You can send this to your API here
+  };
+
   return (
     <>
       {/* Navigation Bar */}
@@ -34,7 +45,7 @@ const login = () => {
           >
             Se connecter
           </h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="email"
@@ -51,6 +62,8 @@ const login = () => {
                 id="email"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="exemple@mail.com"
+                value={email}
+                onChange={(e) => dispatch(setEmail(e.target.value))}
                 required
               />
             </div>
@@ -71,6 +84,8 @@ const login = () => {
                 id="password"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="*********"
+                value={password}
+                onChange={(e) => dispatch(setPassword(e.target.value))}
                 required
               />
             </div>
@@ -100,4 +115,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
