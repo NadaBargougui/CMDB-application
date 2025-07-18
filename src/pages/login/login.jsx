@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const Login = () => {
-  //---------------------onSubmit to dispatch data to redux-----------------------------------------------------------
+  //---------------------onSubmit to dispatch data to redux----------------------------------
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
@@ -24,7 +24,7 @@ const Login = () => {
     password: Yup.string().required("Le mot de passe est requis"),
   });
 
-  //---------------useForm with yupResolver----------------------------------------------
+  //---------------useForm with yupResolver-----------------------------------------------
   const {
     register,
     handleSubmit,
