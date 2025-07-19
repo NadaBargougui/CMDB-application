@@ -9,12 +9,14 @@ import Landing from "./pages/landing/landing";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
 import Notfound from "./pages/notfound/notfound";
+import Home from "./pages/home/home";
 
 const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
   { path: "*", element: <Notfound /> },
+  { path: "/home", element: <Home /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
