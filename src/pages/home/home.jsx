@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleRegion } from "../../store/slices/regionSlice";
 
 const Home = () => {
+  //-------------------------------------------------------------------
+  const dispatch = useDispatch();
+  const openRegion = useSelector((state) => state.region.openRegion);
+
+  const handleToggle = (region) => {
+    console.log("Clicked region:", region);
+    dispatch(toggleRegion(region));
+  };
+  //-------------------------------------------------------------------
   return (
     <>
       {/* Navigation Bar */}
-      <nav className="fixed top-0 w-full z-10 bg-[#546fca]/80 rounded-b-2xl shadow-md ">
+      <nav className="fixed top-0 w-full z-30 bg-[#546fca]/80 rounded-b-2xl shadow-md ">
         <div className="px-4 sm:px-3 md:px-5 py-2 sm:py-2 md:py-3">
           <Link
             to="/"
@@ -16,10 +27,55 @@ const Home = () => {
       </nav>
 
       {/* sidebar Section */}
-      <div className="fixed left-0 p-6 w-72 bg-[#546fca]/60 rounded-b-2xl shadow-lg h-screen overflow-y-auto">
+      <div className="fixed left-0 p-6 w-72 z-20 bg-[#546fca]/60 rounded-b-2xl shadow-lg h-screen overflow-y-auto">
         <ul className="space-y-4 mt-12 text-xl text-white font-semibold w-full">
-          <li className="hover:bg-white/60 hover:text-[#546fca] cursor-pointer w-full border border-white rounded-md px-4 py-3">
-            Sidi Bouzid
+          <li>
+            <div
+              onClick={() => handleToggle("sidi-bouzid")}
+              className="hover:bg-white/60 hover:text-[#546fca] cursor-pointer w-full border border-white rounded-md px-4 py-3"
+            >
+              Sidi Bouzid
+            </div>
+            {openRegion === "sidi-bouzid" && (
+              <ul className="pl-6 mt-2 space-y-1 text-base text-white/90">
+                <li className="hover:bg-white/40 px-3 py-1 rounded">
+                  Bir El Hfay
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Jelma
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Mezzouna
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Meknassy
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Menzel Bouzaiene
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Ouled Haffouz
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Regueb
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Sabela
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Sidi Ali Ben Aoun
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Sidi Bouzid Est
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Sidi Bouzid Ouest
+                </li>
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
+                  Souk Jedid
+                </li>
+              </ul>
+            )}
           </li>
           <li className="hover:bg-white/60 hover:text-[#546fca] cursor-pointer w-full border border-white rounded-md px-4 py-3">
             Béja
@@ -91,6 +147,32 @@ const Home = () => {
             Zaghouan
           </li>
         </ul>
+      </div>
+      {/* videos */}
+      <div className="fixed right-0 flex -top-5">
+        {/* First Video */}
+        <video
+          className="w-[700px] overflow-hidden"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="assets/videos/homeBackground1.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
+        {/* Second Video */}
+        <video
+          className="w-[700px] z-10 overflow-hidden"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="assets/videos/homeBackground2.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
     </>
   );
