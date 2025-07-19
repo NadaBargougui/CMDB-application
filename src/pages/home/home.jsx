@@ -27,7 +27,10 @@ const Home = () => {
       </nav>
 
       {/* sidebar Section */}
-      <div className="fixed left-0 p-6 w-72 z-20 bg-[#546fca]/60 rounded-b-2xl shadow-lg h-screen overflow-y-auto">
+      <div
+        className="fixed left-0 p-6 w-72 z-20 bg-[#546fca]/60 h-screen overflow-y-auto"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
         <ul className="space-y-4 mt-12 text-xl text-white font-semibold w-full">
           <li>
             <div
@@ -174,6 +177,9 @@ const Home = () => {
           Your browser does not support the video tag.
         </video>
       </div>
+
+      {/* Body */}
+      <div className="fixed left-72 p-320 mt-20 top-54 w-[360px] z-20 bg-[#d8dff5] overflow-y-auto"></div>
     </>
   );
 };
