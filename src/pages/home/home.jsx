@@ -179,7 +179,7 @@ const Home = () => {
       </div>
 
       {/* Body */}
-      <div className="fixed left-72 p-320 mt-20 top-54 w-[360px] z-20 bg-[#d8dff5] overflow-y-auto"></div>
+      <div className="fixed left-72 p-320 mt-20 top-51 w-[360px] z-20 bg-[#d8dff5] overflow-y-auto"></div>
     </>
   );
 };
