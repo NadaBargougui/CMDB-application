@@ -3,16 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleRegion } from "../../store/slices/regionSlice";
 import { createDashboard } from "../../store/slices/dashboardSlice";
 import { useState } from "react";
-import { useEffect } from "react";
 
 const Home = () => {
   const dispatch = useDispatch();
   const openRegion = useSelector((state) => state.region.openRegion);
   const dashboards = useSelector((state) => state.dashboard.dashboards);
-
-  useEffect(() => {
-    setFilteredDashboards(dashboards);
-  }, [dashboards]);
 
   //-------------------------------------------------------------------
   const [showModal, setShowModal] = useState(false);
@@ -21,9 +16,11 @@ const Home = () => {
   const [dashboardName, setDashboardName] = useState("");
   const [filteredDashboards, setFilteredDashboards] = useState(dashboards);
 
+  //-------------------------------------------------------------------
   const dashboardsToShow =
     searchRegion.trim() !== "" ? filteredDashboards : dashboards;
 
+  //-------------------------------------------------------------------
   const allRegions = [
     "Sidi Bouzid",
     "Bir El Hfay",
@@ -67,11 +64,12 @@ const Home = () => {
     region.toLowerCase().includes(searchRegion.toLowerCase())
   );
 
-  //-------------------------------------------------------------------
+  //------------------------------------------------------------------------
   const handleToggle = (region) => {
-    console.log("Clicked region:", region);
     dispatch(toggleRegion(region));
   };
+
+  //---------------
   const handleSearch = () => {
     const filtered = dashboards.filter((d) =>
       d.name.toLowerCase().includes(searchRegion.toLowerCase())
@@ -79,13 +77,15 @@ const Home = () => {
     setFilteredDashboards(filtered);
   };
 
+  //---------------
   const handleCreateDashboard = () => {
     if (!selectedRegion || !dashboardName) {
       alert("Veuillez remplir tous les champs");
       return;
     }
-    //-------------------------------------------------------------------
+    //------------------------------------------------------------------------
     dispatch(createDashboard({ region: selectedRegion, name: dashboardName }));
+    //------------------------------------------------------------------------
     setShowModal(false);
     setSearchRegion("");
     setSelectedRegion("");
@@ -318,6 +318,7 @@ const Home = () => {
         </div>
       )}
       <button
+        title="Créer un tableau de bord"
         onClick={() => setShowModal(true)}
         className="cursor-pointer fixed bottom-6 right-6 bg-[#546fca] text-white text-3xl w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:bg-[#546fca]/80 z-50"
       >
