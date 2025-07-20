@@ -1,15 +1,86 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleRegion } from "../../store/slices/regionSlice";
+import { createDashboard } from "../../store/slices/dashboardSlice";
+import { useState } from "react";
 
 const Home = () => {
-  //-------------------------------------------------------------------
   const dispatch = useDispatch();
   const openRegion = useSelector((state) => state.region.openRegion);
+  const dashboards = useSelector((state) => state.dashboard.dashboards);
+  //-------------------------------------------------------------------
+  const [showModal, setShowModal] = useState(false);
+  const [searchRegion, setSearchRegion] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [dashboardName, setDashboardName] = useState("");
+  const [filteredDashboards, setFilteredDashboards] = useState(dashboards); // dashboards = your full list
 
+  const allRegions = [
+    "Sidi Bouzid",
+    "Bir El Hfay",
+    "Jelma",
+    "Mezzouna",
+    "Meknassy",
+    "Menzel Bouzaiene",
+    "Ouled Haffouz",
+    "Regueb",
+    "Sabela",
+    "Sidi Ali Ben Aoun",
+    "Sidi Bouzid Est",
+    "Sidi Bouzid Ouest",
+    "Souk Jedid",
+    "Béja",
+    "Ben Arous",
+    "Bizerte",
+    "Gabès",
+    "Gafsa",
+    "Jendouba",
+    "Kairouan",
+    "Kasserine",
+    "Kebili",
+    "Kef",
+    "Mahdia",
+    "Manouba",
+    "Medenine",
+    "Monastir",
+    "Nabeul",
+    "Sfax",
+    "Ariana",
+    "Siliana",
+    "Sousse",
+    "Tataouine",
+    "Tozeur",
+    "Tunis",
+    "Zaghouan",
+  ];
+
+  const filteredRegions = allRegions.filter((region) =>
+    region.toLowerCase().includes(searchRegion.toLowerCase())
+  );
+
+  //-------------------------------------------------------------------
   const handleToggle = (region) => {
     console.log("Clicked region:", region);
     dispatch(toggleRegion(region));
+  };
+  const handleSearch = () => {
+    const filtered = dashboards.filter((d) =>
+      d.name.toLowerCase().includes(searchRegion.toLowerCase())
+    );
+    setFilteredDashboards(filtered);
+  };
+
+  const handleCreateDashboard = () => {
+    if (!selectedRegion || !dashboardName) {
+      alert("Veuillez remplir tous les champs");
+      return;
+    }
+    //-------------------------------------------------------------------
+    dispatch(createDashboard({ region: selectedRegion, name: dashboardName }));
+    setShowModal(false);
+    setSearchRegion("");
+    setSelectedRegion("");
+    setDashboardName("");
   };
   //-------------------------------------------------------------------
   return (
@@ -41,7 +112,7 @@ const Home = () => {
             </div>
             {openRegion === "sidi-bouzid" && (
               <ul className="pl-6 mt-2 space-y-1 text-base text-white/90">
-                <li className="hover:bg-white/40 px-3 py-1 rounded">
+                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
                   Bir El Hfay
                 </li>
                 <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
@@ -180,6 +251,135 @@ const Home = () => {
 
       {/* Body */}
       <div className="fixed left-72 p-320 mt-20 top-51 w-[360px] z-20 bg-[#d8dff5] overflow-y-auto"></div>
+      {showModal && (
+        <div className="fixed inset-0 flex items-center left-290 top-58 z-50">
+          <div className="bg-white/80 rounded-xl p-6 w-full max-w-md shadow-lg">
+            <h2 className="text-xl font-bold mb-4 text-[#546fca]">
+              Créer un tableau de bord
+            </h2>
+
+            {/* Region Search */}
+            <input
+              type="text"
+              placeholder="Rechercher une région..."
+              className="w-full p-2 border rounded mb-3"
+              value={searchRegion}
+              onChange={(e) => setSearchRegion(e.target.value)}
+            />
+
+            <ul className="max-h-40 overflow-y-auto border rounded mb-3">
+              {filteredRegions.map((region, index) => (
+                <li
+                  key={index}
+                  onClick={() => setSelectedRegion(region)}
+                  className={`p-2 cursor-pointer hover:bg-blue-100 ${
+                    region === selectedRegion ? "bg-blue-200 font-semibold" : ""
+                  }`}
+                >
+                  {region}
+                </li>
+              ))}
+            </ul>
+
+            {/* Dashboard Name */}
+            <input
+              type="text"
+              placeholder="Nom du tableau de bord"
+              className="w-full p-2 border rounded mb-4 bg-[#f8501b]/40"
+              value={dashboardName}
+              onChange={(e) => setDashboardName(e.target.value)}
+            />
+
+            {/* Buttons */}
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+              >
+                Annuler
+              </button>
+              <button
+                onClick={handleCreateDashboard}
+                className="px-4 py-2 bg-[#fbc245] text-white rounded hover:bg-[#fbc245]/80"
+              >
+                Créer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <button
+        onClick={() => setShowModal(true)}
+        className="cursor-pointer fixed bottom-6 right-6 bg-[#546fca] text-white text-3xl w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:bg-[#546fca]/80 z-50"
+      >
+        +
+      </button>
+      {/* show created dashboards */}
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="w-72">...</div>{" "}
+        {/* -----------------------------------------------------------------------------------------------*/}
+        {/* Dashboards list */}
+        <div className="fixed left-72 top-86 right-32 p-6 z-40">
+          {dashboards.map((db, i) => (
+            <div
+              key={i}
+              className="cursor-pointer mb-4 bg-[#546fca]/40 hover:bg-[#f4f6fe]/40 text-black font-bold p-4 rounded-xl shadow-md border border-[#546fca]"
+            >
+              {db.name} -a {db.region}
+            </div>
+          ))}
+        </div>
+      </div>
+      {/* Search bar */}
+
+      <div>
+        {filteredDashboards.map((dashboard) => (
+          <div
+            key={dashboard.id}
+            className="cursor-pointer bg-[#546fca]/50 hover:bg-white text-black font-bold p-4 rounded-xl shadow-md border border-[#546fca] mb-4"
+          >
+            {dashboard.name}
+          </div>
+        ))}
+
+        {filteredDashboards.length === 0 && (
+          <p className="text-gray-500 mt-4">Aucun tableau de bord trouvé.</p>
+        )}
+      </div>
+
+      <div className="fixed right-32 top-76 z-40">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Rechercher un tableau de bord..."
+            className="bg-white border border-[#546fca] p-2 rounded w-80 text-center"
+            value={searchRegion}
+            onChange={(e) => setSearchRegion(e.target.value)}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="absolute w-5 h-5 top-2.5 left-2.5 text-[#3c5297]"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+      </div>
+
+      {/* Search Button */}
+      <button
+        className="fixed cursor-pointer right-6 top-76 z-40 rounded bg-[#fbc245] hover:bg-yellow-500 w-[100px] py-2.5 px-1 border border-[#ec400b] text-sm text-[#ec400b] font-semibold"
+        type="button"
+        onClick={handleSearch}
+      >
+        Recherche
+      </button>
     </>
   );
 };
