@@ -3,17 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleRegion } from "../../store/slices/regionSlice";
 import { createDashboard } from "../../store/slices/dashboardSlice";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Home = () => {
   const dispatch = useDispatch();
   const openRegion = useSelector((state) => state.region.openRegion);
   const dashboards = useSelector((state) => state.dashboard.dashboards);
+
+  useEffect(() => {
+    setFilteredDashboards(dashboards);
+  }, [dashboards]);
+
   //-------------------------------------------------------------------
   const [showModal, setShowModal] = useState(false);
   const [searchRegion, setSearchRegion] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [dashboardName, setDashboardName] = useState("");
-  const [filteredDashboards, setFilteredDashboards] = useState(dashboards); // dashboards = your full list
+  const [filteredDashboards, setFilteredDashboards] = useState(dashboards);
+
+  const dashboardsToShow =
+    searchRegion.trim() !== "" ? filteredDashboards : dashboards;
 
   const allRegions = [
     "Sidi Bouzid",
@@ -315,39 +324,26 @@ const Home = () => {
         +
       </button>
       {/* show created dashboards */}
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-72">...</div>{" "}
-        {/* -----------------------------------------------------------------------------------------------*/}
-        {/* Dashboards list */}
-        <div className="fixed left-72 top-86 right-32 p-6 z-40">
-          {dashboards.map((db, i) => (
+      {/* Dashboards List */}
+      <div
+        className="fixed left-72 top-86 right-32 p-6 z-40 h-[70vh] overflow-y-auto"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {dashboardsToShow.length > 0 ? (
+          dashboardsToShow.map((db, i) => (
             <div
               key={i}
               className="cursor-pointer mb-4 bg-[#546fca]/40 hover:bg-[#f4f6fe]/40 text-black font-bold p-4 rounded-xl shadow-md border border-[#546fca]"
             >
-              {db.name} -a {db.region}
+              {db.name} - {db.region}
             </div>
-          ))}
-        </div>
-      </div>
-      {/* Search bar */}
-
-      <div>
-        {filteredDashboards.map((dashboard) => (
-          <div
-            key={dashboard.id}
-            className="cursor-pointer bg-[#546fca]/50 hover:bg-white text-black font-bold p-4 rounded-xl shadow-md border border-[#546fca] mb-4"
-          >
-            {dashboard.name}
-          </div>
-        ))}
-
-        {filteredDashboards.length === 0 && (
+          ))
+        ) : (
           <p className="text-gray-500 mt-4">Aucun tableau de bord trouvé.</p>
         )}
       </div>
 
+      {/* Search bar */}
       <div className="fixed right-32 top-76 z-40">
         <div className="relative">
           <input
