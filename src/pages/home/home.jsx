@@ -13,6 +13,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const openRegion = useSelector((state) => state.region.openRegion);
   const dashboards = useSelector((state) => state.dashboard.dashboards);
+  const [selectedRegionFilter, setSelectedRegionFilter] = useState("");
 
   //-------------------------------------------------------------------
   const [showModal, setShowModal] = useState(false);
@@ -22,8 +23,16 @@ const Home = () => {
   const [filteredDashboards, setFilteredDashboards] = useState(dashboards);
 
   //-------------------------------------------------------------------
-  const dashboardsToShow =
-    searchRegion.trim() !== "" ? filteredDashboards : dashboards;
+  const dashboardsToShow = dashboards.filter((db) => {
+    const matchesRegion = selectedRegionFilter
+      ? db.region === selectedRegionFilter
+      : true;
+    const matchesSearch =
+      searchRegion.trim() !== ""
+        ? db.name.toLowerCase().includes(searchRegion.toLowerCase())
+        : true;
+    return matchesRegion && matchesSearch;
+  });
 
   //-------------------------------------------------------------------
   const allRegions = [
@@ -132,7 +141,11 @@ const Home = () => {
         <ul className="space-y-4 mt-12 text-xl text-white font-semibold w-full">
           <li>
             <div
-              onClick={() => handleToggle("sidi-bouzid")}
+              onClick={() => {
+                handleToggle("sidi-bouzid");
+                setSelectedRegionFilter("Sidi Bouzid");
+                setSearchRegion("");
+              }}
               className="hover:bg-white/60 hover:text-[#546fca] cursor-pointer w-full border border-white rounded-md px-4 py-3"
             >
               Sidi Bouzid
@@ -347,7 +360,7 @@ const Home = () => {
         className="fixed left-72 top-86 right-32 p-6 z-40 h-[70vh] overflow-y-auto"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {dashboardsToShow.length > 0 ? (
+        {filteredDashboards.length > 0 ? (
           dashboardsToShow.map((db, i) => (
             <div
               key={i}
