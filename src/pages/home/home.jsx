@@ -13,7 +13,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const openRegion = useSelector((state) => state.region.openRegion);
   const dashboards = useSelector((state) => state.dashboard.dashboards);
-  const [selectedRegionFilter, setSelectedRegionFilter] = useState("");
 
   //-------------------------------------------------------------------
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +20,7 @@ const Home = () => {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [dashboardName, setDashboardName] = useState("");
   const [filteredDashboards, setFilteredDashboards] = useState(dashboards);
+  const [selectedRegionFilter, setSelectedRegionFilter] = useState("");
 
   //-------------------------------------------------------------------
   const dashboardsToShow = dashboards.filter((db) => {
@@ -79,7 +79,6 @@ const Home = () => {
   );
 
   //------------------------------------------------------------------------
-
   const handleEditDashboard = (dashboard) => {
     navigate(
       `/dashboard/${encodeURIComponent(dashboard.region)}/${encodeURIComponent(
@@ -87,15 +86,14 @@ const Home = () => {
       )}`
     );
   };
-
+  //---------------
   const handleDeleteDashboard = (dashboard) => {
     dispatch(deleteDashboard(dashboard));
   };
-
+  //---------------
   const handleToggle = (region) => {
     dispatch(toggleRegion(region));
   };
-
   //---------------
   const handleSearch = () => {
     const filtered = dashboards.filter((d) =>
@@ -103,7 +101,6 @@ const Home = () => {
     );
     setFilteredDashboards(filtered);
   };
-
   //---------------
   const handleCreateDashboard = () => {
     if (!selectedRegion || !dashboardName) {
@@ -374,14 +371,14 @@ const Home = () => {
               {/* Buttons to edit & delete */}
               <div className="flex gap-2">
                 <button
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+                  className="cursor-pointer bg-[#546fca] hover:bg-[#5e71ac] text-white px-3 py-1 rounded"
                   onClick={() => handleEditDashboard(db)}
                   title="Entrer dans le tableau de bord"
                 >
                   Éditer
                 </button>
                 <button
-                  className="bg-[#f8501b]/90 hover:bg-[#f8441b] text-white px-3 py-1 rounded"
+                  className="cursor-pointer bg-[#f8501b]/80 hover:bg-[#f8441b] text-white px-3 py-1 rounded"
                   onClick={() => {
                     const confirmDelete = window.confirm(
                       `Voulez-vous vraiment supprimer le tableau de bord "${db.name}" ?`
