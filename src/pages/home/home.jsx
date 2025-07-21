@@ -19,7 +19,7 @@ const Home = () => {
   const [searchRegion, setSearchRegion] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
   const [dashboardName, setDashboardName] = useState("");
-  const [filteredDashboards, setFilteredDashboards] = useState(dashboards);
+  const [setFilteredDashboards] = useState(dashboards);
   const [selectedRegionFilter, setSelectedRegionFilter] = useState("");
 
   //-------------------------------------------------------------------
@@ -79,6 +79,11 @@ const Home = () => {
   );
 
   //------------------------------------------------------------------------
+  const handleShowAllDashboards = () => {
+    setSelectedRegionFilter(""); // Remove region filter
+    setSearchRegion(""); // Clear search bar
+  };
+
   const handleEditDashboard = (dashboard) => {
     navigate(
       `/dashboard/${encodeURIComponent(dashboard.region)}/${encodeURIComponent(
@@ -107,6 +112,7 @@ const Home = () => {
       alert("Veuillez remplir tous les champs");
       return;
     }
+
     //------------------------------------------------------------------------
     dispatch(createDashboard({ region: selectedRegion, name: dashboardName }));
     //------------------------------------------------------------------------
@@ -147,44 +153,34 @@ const Home = () => {
             >
               Sidi Bouzid
             </div>
+
             {openRegion === "sidi-bouzid" && (
               <ul className="pl-6 mt-2 space-y-1 text-base text-white/90">
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Bir El Hfay
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Jelma
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Mezzouna
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Meknassy
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Menzel Bouzaiene
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Ouled Haffouz
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Regueb
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Sabela
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Sidi Ali Ben Aoun
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Sidi Bouzid Est
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Sidi Bouzid Ouest
-                </li>
-                <li className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer">
-                  Souk Jedid
-                </li>
+                {[
+                  "Bir El Hfay",
+                  "Jelma",
+                  "Mezzouna",
+                  "Meknassy",
+                  "Menzel Bouzaiene",
+                  "Ouled Haffouz",
+                  "Regueb",
+                  "Sabela",
+                  "Sidi Ali Ben Aoun",
+                  "Sidi Bouzid Est",
+                  "Sidi Bouzid Ouest",
+                  "Souk Jedid",
+                ].map((subRegion) => (
+                  <li
+                    key={subRegion}
+                    onClick={() => {
+                      setSelectedRegionFilter(subRegion); // show only the clicked subregion
+                      setSearchRegion("");
+                    }}
+                    className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer"
+                  >
+                    {subRegion}
+                  </li>
+                ))}
               </ul>
             )}
           </li>
@@ -357,7 +353,7 @@ const Home = () => {
         className="fixed left-72 top-86 right-32 p-6 z-40 h-[70vh] overflow-y-auto"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {filteredDashboards.length > 0 ? (
+        {dashboardsToShow.length > 0 ? (
           dashboardsToShow.map((db, i) => (
             <div
               key={i}
@@ -431,6 +427,14 @@ const Home = () => {
         onClick={handleSearch}
       >
         Recherche
+      </button>
+      {/* show all Button */}
+      <button
+        className="fixed cursor-pointer left-76 top-76 z-40 rounded bg-[#3c5297]/90 hover:bg-[#3c5297] w-[150px] py-2.5 px-1 border border-white text-sm text-white font-semibold"
+        type="button"
+        onClick={handleShowAllDashboards}
+      >
+        Tous les tableaux
       </button>
     </>
   );
