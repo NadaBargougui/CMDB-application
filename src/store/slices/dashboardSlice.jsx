@@ -19,8 +19,18 @@ const dashboardSlice = createSlice({
         (db) => db.name !== name || db.region !== region
       );
     },
+    updateDashboardName(state, action) {
+      const { region, oldName, newName } = action.payload;
+      const dashboard = state.dashboards.find(
+        (db) => db.region === region && db.name === oldName
+      );
+      if (dashboard) {
+        dashboard.name = newName;
+      }
+    },
   },
 });
 
-export const { createDashboard, deleteDashboard } = dashboardSlice.actions;
+export const { createDashboard, deleteDashboard, updateDashboardName } =
+  dashboardSlice.actions;
 export default dashboardSlice.reducer;

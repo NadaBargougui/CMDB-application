@@ -78,12 +78,12 @@ const Home = () => {
     region.toLowerCase().includes(searchRegion.toLowerCase())
   );
 
-  //------------------------------------------------------------------------
+  //-------------------------------------------------------------------------
   const handleShowAllDashboards = () => {
-    setSelectedRegionFilter(""); // Remove region filter
-    setSearchRegion(""); // Clear search bar
+    setSelectedRegionFilter("");
+    setSearchRegion("");
   };
-
+  //---------------
   const handleEditDashboard = (dashboard) => {
     navigate(
       `/dashboard/${encodeURIComponent(dashboard.region)}/${encodeURIComponent(
@@ -121,7 +121,7 @@ const Home = () => {
     setSelectedRegion("");
     setDashboardName("");
   };
-  //-------------------------------------------------------------------
+  //--------------------------------------------------------------------------
   return (
     <>
       {/* Navigation Bar */}
@@ -173,7 +173,7 @@ const Home = () => {
                   <li
                     key={subRegion}
                     onClick={() => {
-                      setSelectedRegionFilter(subRegion); // show only the clicked subregion
+                      setSelectedRegionFilter(subRegion);
                       setSearchRegion("");
                     }}
                     className="hover:bg-white/40 px-3 py-1 rounded cursor-pointer"
@@ -286,7 +286,7 @@ const Home = () => {
       <div className="fixed left-72 p-320 mt-20 top-51 w-[360px] z-20 bg-[#d8dff5] overflow-y-auto"></div>
       {showModal && (
         <div className="fixed inset-0 flex items-center left-290 top-58 z-50">
-          <div className="bg-white/80 rounded-xl p-6 w-full max-w-md shadow-lg">
+          <div className="bg-white/90 rounded-xl p-6 w-full max-w-md shadow-lg">
             <h2 className="text-xl font-bold mb-4 text-[#546fca]">
               Créer un tableau de bord
             </h2>
