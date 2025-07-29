@@ -1,0 +1,83 @@
+# ---------------------------
+# OS / Editor junk
+# ---------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ---------------------------
+# Git / Logs / Coverage
+# ---------------------------
+*.log
+logs/
+coverage/
+.coverage
+htmlcov/
+
+# ---------------------------
+# Python / Django (backend)
+# ---------------------------
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Django stuff
+# Keep migrations tracked! (do NOT ignore core/migrations/*.py)
+*.sqlite3
+staticfiles/
+media/
+# If you generate local-only settings
+/local_settings.py
+
+# Tooling
+.mypy_cache/
+.pytest_cache/
+.pytype/
+.tox/
+ruff_cache/
+.cache/
+
+# ---------------------------
+# Node / React (frontend)
+# ---------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+.cache/
+*.tsbuildinfo
+
+# If using Next/Vite/etc (front-end variants)
+.next/
+out/
+.vite/
+.eslintcache
+
+# ---------------------------
+# Environment / Secrets
+# ---------------------------
+.env
+.env.*
+!.env.example
+
+# ---------------------------
+# Docker
+# ---------------------------
+# Ignore local artifacts; keep Dockerfile and compose files committed
+*.pid
+# If you export images/layers locally
+docker-data/
