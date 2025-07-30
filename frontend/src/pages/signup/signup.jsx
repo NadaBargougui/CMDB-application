@@ -19,6 +19,34 @@ const Signup = () => {
     dispatch(setPassword(data.password));
     console.log("Form submitted:", data);
     // we can now use this data for an API call
+  //-------------------API--------------------------------------
+    try {
+    const response = await fetch("http://localhost:8000/api/register/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: data.name,
+        email: data.email,
+        password: data.password,
+        confirm_password: data.confirmPassword,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      console.log("Inscription réussie:", result);
+      // redirect to login page or home
+    } else {
+      console.error("Erreur d'inscription:", result);
+      // show error to user
+    }
+  } catch (error) {
+    console.error("Erreur serveur:", error);
+  }
+//--------------------------------------------------------------------------------
   };
 
   //--------------------Yup Schema---------------------------------------------------------
