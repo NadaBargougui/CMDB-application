@@ -4,16 +4,27 @@ import { setEmail, setPassword } from "../../store/slices/userSlice";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 
 const Login = () => {
   //---------------------onSubmit to dispatch data to redux----------------------------------
   const dispatch = useDispatch();
 
-  const onSubmit = (data) => {
-    dispatch(setEmail(data.email));
-    dispatch(setPassword(data.password));
-    console.log("Login info:", data);
-    // Send to API here
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/login/", {
+        email: data.email,
+        password: data.password,
+      });
+      console.log("Login successful:", response.data);
+
+      dispatch(setEmail(data.email));
+      dispatch(setPassword(data.password));
+      console.log("Login info:", data);
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+      // Show error message
+    }
   };
 
   //--------------------Yup Schema---------------------------------------------------------
