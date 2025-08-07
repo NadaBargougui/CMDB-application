@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import React, { useState } from "react";
 import {
   setUsername,
   setEmail,
@@ -11,12 +12,15 @@ import {
 } from "../../store/slices/userSlice";
 
 const Signup = () => {
-  //---------------------onSubmit to dispatch data to redux-----------------------------------------------------------
   const dispatch = useDispatch();
 
+  const [serverError, setServerError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
   const onSubmit = async (data) => {
+    setServerError("");
+    setSuccessMsg("");
     try {
-      // Send POST request to Django signup API
       const response = await axios.post("http://127.0.0.1:8000/api/signup/", {
         username: data.name,
         email: data.email,
@@ -24,19 +28,24 @@ const Signup = () => {
       });
 
       console.log("Signup successful:", response.data);
-
       dispatch(setUsername(data.name));
       dispatch(setEmail(data.email));
       dispatch(setPassword(data.password));
-      console.log("Form submitted:", data);
-      // we can now use this data for an API call
+
+      setSuccessMsg("Inscription réussie ! Veuillez vérifier votre email.");
     } catch (error) {
       console.error("Signup failed:", error.response?.data || error.message);
-      // Handle error: show message to user
+
+      const errMsg =
+        error.response?.data?.error ||
+        error.response?.data?.detail ||
+        error.response?.data?.email?.[0] ||
+        "Erreur lors de l'inscription";
+
+      setServerError(errMsg);
     }
   };
 
-  //--------------------Yup Schema---------------------------------------------------------
   const schema = Yup.object().shape({
     name: Yup.string().required("Le nom est requis"),
     email: Yup.string()
@@ -50,14 +59,12 @@ const Signup = () => {
       .required("Veuillez confirmer votre mot de passe"),
   });
 
-  //---------------useForm with yupResolver----------------------------------------------
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  //-------------------------------------------------------------------------------------
   return (
     <>
       {/* Navigation Bar */}
@@ -111,7 +118,7 @@ const Signup = () => {
                 {...register("name")}
               />
               {errors.name && (
-                <p className="text-red-600 text-sm">{errors.name.message}</p>
+                <p className="text-red-700 text-sm">{errors.name.message}</p>
               )}
             </div>
 
@@ -134,7 +141,7 @@ const Signup = () => {
                 {...register("email")}
               />
               {errors.email && (
-                <p className="text-red-600 text-sm">{errors.email.message}</p>
+                <p className="text-red-700 text-sm">{errors.email.message}</p>
               )}
             </div>
 
@@ -157,7 +164,7 @@ const Signup = () => {
                 {...register("password")}
               />
               {errors.password && (
-                <p className="text-red-600 text-sm">
+                <p className="text-red-700 text-sm">
                   {errors.password.message}
                 </p>
               )}
@@ -165,7 +172,7 @@ const Signup = () => {
 
             <div className="mb-4">
               <label
-                htmlFor="password"
+                htmlFor="confirmPassword"
                 className="block mb-2 text-sm font-medium"
                 style={{
                   textShadow:
@@ -176,17 +183,25 @@ const Signup = () => {
               </label>
               <input
                 type="password"
-                id="password"
+                id="confirmPassword"
                 className="bg-gray-100 border border-black text-gray-900 text-sm rounded-lg w-full py-2.5 px-4"
                 placeholder="*********"
                 {...register("confirmPassword")}
               />
               {errors.confirmPassword && (
-                <p className="text-red-600 text-sm">
+                <p className="text-red-700 text-sm">
                   {errors.confirmPassword.message}
                 </p>
               )}
             </div>
+
+            {/* Show server error or success messages */}
+            {serverError && (
+              <p className="text-red-700 text-center mb-4">{serverError}</p>
+            )}
+            {successMsg && (
+              <p className="text-green-700 text-center mb-4">{successMsg}</p>
+            )}
 
             <div className="flex items-center justify-between mb-4">
               <button
@@ -197,7 +212,7 @@ const Signup = () => {
               </button>
               <div className="flex items-center text-sm">
                 <p>Vous avez un compte ?</p>
-                <Link to="/login" className=" cursor-pointer ml-1">
+                <Link to="/login" className="cursor-pointer ml-1">
                   Se connecter
                 </Link>
               </div>
