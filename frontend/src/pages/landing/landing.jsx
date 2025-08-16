@@ -20,8 +20,8 @@ const Landing = () => {
         {/* Text between navbar and buttons */}
         <div className="absolute top-[20%] sm:top-[25%] md:top-[30%] lg:top-[35%] xl:top-[35%] left-[10%] z-20">
           <h1 className="text-black text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold drop-shadow-md">
-            Bienvenue à la Base de Données <br />
-            de Gestion de Configuration de <br />
+            Bienvenue au Système de gestion <br />
+            de la configuration réseaux pour <br />
           </h1>
           <h1 className=" text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold drop-shadow-md bg-gradient-to-r from-orange-600 to-yellow-200 bg-clip-text text-transparent">
             Tunisie Telecom
