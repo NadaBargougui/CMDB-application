@@ -24,7 +24,7 @@ const Landing = () => {
             de la configuration réseaux pour <br />
           </h1>
           <h1 className=" text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold drop-shadow-md bg-gradient-to-r from-orange-600 to-yellow-200 bg-clip-text text-transparent">
-            Tunisie Telecom
+            TT
           </h1>
         </div>
         {/* Background Image */}
